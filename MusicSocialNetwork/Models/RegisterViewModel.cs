@@ -7,16 +7,12 @@ using System.Web;
 
 namespace MusicSocialNetwork.Models
 {
-    public class UserViewModel
+    public class RegisterViewModel
     {
-        [Required]
         public string UserName { get; set; }
-
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
-
         [PasswordPropertyText]
-        public string Pass { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -23,6 +23,13 @@ namespace MusicSocialNetwork
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/validation").Include(
+                    "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                    "~/Scripts/jquery.validate.*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                    "~/Scripts/knockout-3.1.0.*"));
         }
     }
 }

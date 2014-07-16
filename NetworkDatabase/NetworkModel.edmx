@@ -52,7 +52,7 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
           <Property Name="ImageMimeType" Type="nchar" MaxLength="50" Nullable="false" />
@@ -170,8 +170,8 @@
           <Property Name="IsPrivate" Type="Boolean" Nullable="false" />
           <Property Name="UserSendId" Type="Int32" Nullable="false" />
           <Property Name="UserReceiveId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserReceiver" Relationship="Self.FK_Messages_Users_Receive" FromRole="Messages" ToRole="Users" />
-          <NavigationProperty Name="UserSender" Relationship="Self.FK_Messages_Users_Send" FromRole="Messages" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Messages_Users_Receive" FromRole="Messages" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Messages_Users_Send" FromRole="Messages" ToRole="Users" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -209,12 +209,12 @@
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ReceiveMessages" Relationship="Self.FK_Messages_Users_Receive" FromRole="Users" ToRole="Messages" />
-          <NavigationProperty Name="SendMessages" Relationship="Self.FK_Messages_Users_Send" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Messages_Users_Receive" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="Messages1" Relationship="Self.FK_Messages_Users_Send" FromRole="Users" ToRole="Messages" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="Songs" Relationship="Self.UsersSongs" FromRole="Users" ToRole="Songs" />
         </EntityType>
@@ -258,7 +258,7 @@
           <End Role="Songs" Type="Self.Song" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="NetworkConnection" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="NetworkContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Songs" EntityType="Self.Song" />
@@ -286,7 +286,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MusicNetworkModelStoreContainer" CdmEntityContainer="NetworkConnection">
+        <EntityContainerMapping StorageEntityContainer="MusicNetworkModelStoreContainer" CdmEntityContainer="NetworkContext">
           <EntitySetMapping Name="Messages">
             <EntityTypeMapping TypeName="MusicNetworkModel.Message">
               <MappingFragment StoreEntitySet="Messages">

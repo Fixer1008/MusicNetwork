@@ -23,7 +23,7 @@ namespace NetworkDatabase
         public int UserSendId { get; set; }
         public int UserReceiveId { get; set; }
     
-        public virtual User UserReceiver { get; set; }
-        public virtual User UserSender { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

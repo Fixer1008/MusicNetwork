@@ -2,7 +2,28 @@
     ViewBag.Title = "Home Page";
 }
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#GetItems').click(function () {
+            $.ajax({
+                url: '../api/song',
+                datatype: 'html',
+                success: function (data) {
+                    var child = '<div>' + data[0].RoleName +'</div>';
+                    $('#container').append(child);
+                }
+            });
+        });
+    });
+</script>
 
 <div class="row">
+    <div id="container">
+    </div>
+   
+    
+    @Html.ActionLink("Add user", "Add", "Home")
+    
+    <input type="button" id="GetItems" value="Get all!"/>
 
 </div>

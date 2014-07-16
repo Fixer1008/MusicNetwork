@@ -16,8 +16,8 @@ namespace NetworkDatabase
     {
         public User()
         {
-            this.ReceiveMessages = new HashSet<Message>();
-            this.SendMessages = new HashSet<Message>();
+            this.Messages = new HashSet<Message>();
+            this.Messages1 = new HashSet<Message>();
             this.Songs = new HashSet<Song>();
         }
     
@@ -29,8 +29,8 @@ namespace NetworkDatabase
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
     
-        public virtual ICollection<Message> ReceiveMessages { get; set; }
-        public virtual ICollection<Message> SendMessages { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Message> Messages1 { get; set; }
         public virtual Role Role { get; set; }
         public virtual ICollection<Song> Songs { get; set; }
     }

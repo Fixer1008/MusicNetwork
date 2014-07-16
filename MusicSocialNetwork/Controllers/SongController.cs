@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using DAL.Interfaces;
 using MusicSocialNetwork.Models;
+using NetworkDatabase;
 
 namespace MusicSocialNetwork.Controllers
 {
@@ -22,9 +23,11 @@ namespace MusicSocialNetwork.Controllers
         public IEnumerable<RoleViewModel> Get()
         {
             var dbRoles = _unitOfWork.RoleRepository.All;
-            ////var 
-
-            //return;
+            var roles = dbRoles.Select(dbRole => new RoleViewModel()
+            {
+                RoleName = dbRole.RoleName
+            }).ToList();
+            return roles;
         }
 
         // GET api/song/5

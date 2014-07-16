@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Mvc;
 using Autofac;
+using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using DAL.Implementations;
 using MusicSocialNetwork.Modules;
+using MusicSocialNetwork.Providers;
 
 namespace MusicSocialNetwork
 {
@@ -27,9 +31,16 @@ namespace MusicSocialNetwork
             var builder = new ContainerBuilder();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterType<MusicNetworkRoleProvider>();
             builder.RegisterModule<RepositoryModule>();
 
             var container = builder.Build();
+            //container.Resolve<MusicNetworkRoleProvider>();
+
+            //DependencyResolver
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            
 
             var resolver = new AutofacWebApiDependencyResolver(container);
             config.DependencyResolver = resolver;
