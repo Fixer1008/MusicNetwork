@@ -9,6 +9,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/validation")
     @Scripts.Render("~/bundles/knockout")
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ValidateUser();
+            LoadViewModel('@User.Identity.IsAuthenticated');
+        });
+    </script>
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,17 +34,18 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav">
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("logOff", "LogOff", "Account")</li>
-                        <li>Hello, @User.Identity.Name !</li>
-                    }
-                    else
-                    {
-                      <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                    }
+                    <li data-bind="visible: newUser.isVisibleName"><a href="#" data-bind="click: newUser.Logoff">LogOff</a></li>
+                    <li data-bind="visible: newUser.isVisibleName"><a href="#" data-bind="text: newUser.newUserName"></a></li>
+                    <li data-bind="visible: newUser.isVisibleForm">
+                        <form id="loginForm" data-bind="submit: newUser.Login">
+                            <label class="loginLabel">Login: </label>
+                            <input class="loginInput" type="text" name="login" data-bind="value: newUser.newUserName" />
+                            <label class="loginLabel">Password: </label>
+                            <input class="loginInput" type="password" name="pass" data-bind="value: newUser.newUserPassword" />
+                            <button id="loginButton" type="submit">Login</button>
+                        </form>
+                    </li>
                 </ul>
-
             </div>
         </div>
     </div>

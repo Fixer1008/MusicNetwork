@@ -26,10 +26,13 @@ namespace MusicSocialNetwork
 
             bundles.Add(new ScriptBundle("~/bundles/validation").Include(
                     "~/Scripts/jquery.unobtrusive-ajax.min.js",
-                    "~/Scripts/jquery.validate.*"));
+                    "~/Scripts/jquery.validate.*",
+                    "~/Scripts/ViewModels/LoginFormValidation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                    "~/Scripts/knockout-3.1.0.*"));
+                    "~/Scripts/knockout-3.1.0.*",
+                    "~/Scripts/pager.js",
+                    "~/Scripts/ViewModels/NetworkViewModel.js"));
         }
     }
 }

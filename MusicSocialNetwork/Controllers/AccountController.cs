@@ -28,7 +28,7 @@ namespace MusicSocialNetwork.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginViewModel userLogin, string returnUrl)
+        public bool Login(LoginViewModel userLogin)
         {
             if (ModelState.IsValid)
             {
@@ -37,21 +37,14 @@ namespace MusicSocialNetwork.Controllers
                 if (ValidateUser(userName, password))
                 {
                     FormsAuthentication.SetAuthCookie(userName, false);
-                    if (Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return true;
                 }
             }
             else
             {
                 ModelState.AddModelError("", "Неправильный пароль или логин");
             }
-            return RedirectToAction("Login");
+            return false;
         }
 
         private bool ValidateUser(string userName, string pass)
@@ -73,10 +66,9 @@ namespace MusicSocialNetwork.Controllers
             return false;
         }
 
-        public ActionResult LogOff()
+        public void LogOff()
         {
             FormsAuthentication.SignOut();
-            return null;
         }
 
         [HttpGet]
@@ -99,7 +91,6 @@ namespace MusicSocialNetwork.Controllers
                 {
                     UserName = registerUser.UserName,
                     Email = registerUser.Email,
-                    //Password = Crypto.Hash(registerUser.Password),
                     Password = p,
                     ImageData = new byte[3] {1, 2, 3},
                     ImageMimeType = "geqwge",

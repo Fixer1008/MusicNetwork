@@ -172,7 +172,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Custom scripts\GetItems.js" />
+    <Content Include="Scripts\ViewModels\LoginFormValidation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -185,8 +185,10 @@
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\pager.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ViewModels\NetworkViewModel.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

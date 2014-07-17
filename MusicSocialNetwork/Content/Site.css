@@ -40,3 +40,27 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+#loginForm {
+    margin-top: 12px; 
+    margin-bottom: 10px; 
+}
+
+#loginButton {
+    margin-left: 10px; 
+}
+
+.loginLabel {
+    margin-left: 10px; 
+    margin-right: 5px;
+    color: white;
+}
+
+.loginInput {
+    padding-left: 5px; 
+    padding-right: 5px;
+}
+
+.error {
+    color: red;
+}
