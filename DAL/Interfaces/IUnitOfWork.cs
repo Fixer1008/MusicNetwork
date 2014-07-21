@@ -13,6 +13,7 @@ namespace DAL.Interfaces
         IRepository<Role> RoleRepository { get; }
         IRepository<Message> MessageRepository { get; }
         IRepository<Song> SongRepository { get; }
+        IRepository<Image> ImageRepository { get; }
 
         void Commit();
     }

@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DAL.Interfaces;
+using MusicSocialNetwork.Helpers;
 using MusicSocialNetwork.Models;
 using NetworkDatabase;
 
@@ -22,12 +23,12 @@ namespace MusicSocialNetwork.Controllers
         // GET api/song
         public IEnumerable<RoleViewModel> Get()
         {
-            var dbRoles = _unitOfWork.RoleRepository.All;
-            var roles = dbRoles.Select(dbRole => new RoleViewModel()
-            {
-                RoleName = dbRole.RoleName
-            }).ToList();
-            return roles;
+            //var songs = _unitOfWork.SongRepository.All;
+            //var roles = dbRoles.Select(dbRole => new RoleViewModel()
+            //{
+            //    RoleName = dbRole.RoleName
+            //}).ToList();
+            return null;
         }
 
         // GET api/song/5
@@ -37,13 +38,27 @@ namespace MusicSocialNetwork.Controllers
         }
 
         // POST api/song
-        public void Post([FromBody]string value)
+        public void Post([FromBody]SongEntity track)
         {
-        }
+            if (ModelState.IsValid)
+            {
+               var user = _unitOfWork.UserRepository.All.FirstOrDefault(
+                             name => name.UserName == track.UserName);
 
-        // PUT api/song/5
-        public void Put(int id, [FromBody]string value)
-        {
+               int duration = SongHelper.ParseDuration(track.Duration);
+
+               user.Songs.Add(new Song()
+               {
+                   SongId = track.SongId,
+                   SongName = track.SongName,
+                   Artist = track.Artist,
+                   Duration = duration,
+                   Url = track.Url,
+               });
+
+               _unitOfWork.UserRepository.Update(user);
+               _unitOfWork.Commit();
+            }
         }
 
         // DELETE api/song/5

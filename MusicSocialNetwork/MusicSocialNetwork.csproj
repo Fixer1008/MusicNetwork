@@ -149,20 +149,30 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SongController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SongHelper.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
-    <Compile Include="Models\SongViewModel.cs" />
+    <Compile Include="Models\SongEntity.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\MusicNetworkRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Database\MusicNetwork.mdf" />
+    <Content Include="App_Data\Database\MusicNetwork_log.ldf">
+      <DependentUpon>MusicNetwork.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\Images\dashBerlin.jpg" />
+    <Content Include="App_Data\Images\glyphicons_432_plus.png" />
+    <Content Include="App_Data\Images\pendulum.jpg" />
+    <Content Include="App_Data\Images\secondstoMars.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -172,7 +182,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\ViewModels\LoginFormValidation.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -188,8 +199,10 @@
     <Content Include="Scripts\pager.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ViewModels\AudioViewModel.js" />
     <Content Include="Scripts\ViewModels\NetworkViewModel.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Home\images\dash.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -208,7 +221,7 @@
     <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

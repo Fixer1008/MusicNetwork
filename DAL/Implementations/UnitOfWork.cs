@@ -32,6 +32,10 @@ namespace DAL.Implementations
         {
             get { return new SongRepo(_networkContext); }
         }
+        public IRepository<Image> ImageRepository
+        {
+            get {return new ImageRepo(_networkContext);}
+        }
 
         public void Commit()
         {

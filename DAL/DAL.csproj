@@ -50,11 +50,13 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Implementations\EntityRepository.cs" />
+    <Compile Include="Implementations\ImageRepo.cs" />
     <Compile Include="Implementations\MessageRepo.cs" />
     <Compile Include="Implementations\RoleRepo.cs" />
     <Compile Include="Implementations\SongRepo.cs" />
     <Compile Include="Implementations\UnitOfWork.cs" />
     <Compile Include="Implementations\UserRepo.cs" />
+    <Compile Include="Interfaces\IImageRepo.cs" />
     <Compile Include="Interfaces\IMessageRepo.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IRoleRepository.cs" />

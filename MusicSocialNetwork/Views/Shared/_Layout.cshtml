@@ -7,13 +7,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/validation")
+    @Scripts.Render("~/bundles/validation") 
     @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/viewModels")
     
     <script type="text/javascript">
         $(document).ready(function () {
-            ValidateUser();
-            LoadViewModel('@User.Identity.IsAuthenticated');
+            LoadViewModel('@User.Identity.IsAuthenticated', '@User.Identity.Name');
+            @*LoadAudio('@Url.Action("GetPlusImage", "Image")');*@
         });
     </script>
 
@@ -27,24 +28,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li><a href="#!/deep_navigation/start">Home</a></li>
                 </ul>
-                <ul class="nav navbar-nav">
-                    <li data-bind="visible: newUser.isVisibleName"><a href="#" data-bind="click: newUser.Logoff">LogOff</a></li>
-                    <li data-bind="visible: newUser.isVisibleName"><a href="#" data-bind="text: newUser.newUserName"></a></li>
-                    <li data-bind="visible: newUser.isVisibleForm">
-                        <form id="loginForm" data-bind="submit: newUser.Login">
-                            <label class="loginLabel">Login: </label>
-                            <input class="loginInput" type="text" name="login" data-bind="value: newUser.newUserName" />
-                            <label class="loginLabel">Password: </label>
-                            <input class="loginInput" type="password" name="pass" data-bind="value: newUser.newUserPassword" />
-                            <button id="loginButton" type="submit">Login</button>
-                        </form>
-                    </li>
+                <ul class="nav navbar-nav">                 
+                    <li data-bind="ifnot: loginUser().isVisibleName"><a href="#!/deep_navigation/authForm">LogIn</a></li>
+                    <li data-bind="if: loginUser().isVisibleName"><a href="#" data-bind="click: loginUser().Logoff">LogOff</a></li>
+                    <li data-bind="if: loginUser().profileName"><a href="#!/deep_navigation/profile" data-bind="text: loginUser().profileName"></a></li>
                 </ul>
             </div>
         </div>
@@ -53,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - MusicNetwork App</p>
         </footer>
     </div>
 

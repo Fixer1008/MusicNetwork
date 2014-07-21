@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Image.cs">
+      <DependentUpon>NetworkModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Message.cs">
       <DependentUpon>NetworkModel.tt</DependentUpon>
     </Compile>

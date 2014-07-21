@@ -30,5 +30,6 @@ namespace NetworkDatabase
         public virtual DbSet<Song> Songs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
     }
 }

@@ -12,36 +12,35 @@ namespace MusicSocialNetwork.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public HomeController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult Add()
-        {
-            return View(new UserViewModel());
-        }
-
-        [HttpPost]
-        public ActionResult Add(UserViewModel user)
-        {
-            using (IUnitOfWork unitOfWork = new UnitOfWork())
+            string[] additionalImages =
             {
+                "glyphicons_432_plus"
+            };
 
-                unitOfWork.UserRepository.Create(new User()
+            var dbImages = _unitOfWork.ImageRepository.All.Where(
+                image => image.FileName != additionalImages[0]).ToList();
+
+            for (int i = 0; i < dbImages.Count; i++)
+            {
+                for (int j = 0; j < additionalImages.Length; j++)
                 {
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Password = user.Pass,
-                    ImageData = new byte[3] { 1,2,3},
-                    ImageMimeType = "geqwge",
-                    RoleId = 2
-                });
-                unitOfWork.Commit();
+                    if (dbImages[i].FileName == additionalImages[j])
+                    {
+                        dbImages.Remove(dbImages[i]);
+                    }                    
+                }
             }
-            
-            return null;           
+
+            return View(dbImages);
         }
     }
 }
