@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>MusicNetwork Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -13,8 +13,12 @@
     
     <script type="text/javascript">
         $(document).ready(function () {
-            LoadViewModel('@User.Identity.IsAuthenticated', '@User.Identity.Name');
-            @*LoadAudio('@Url.Action("GetPlusImage", "Image")');*@
+            var urls = [
+                '@Url.Action("Login", "Account")',
+                '@Url.Action("LogOff", "Account")',
+                '@Url.Action("Register", "Account")'
+            ];
+            LoadViewModel('@User.Identity.IsAuthenticated', '@User.Identity.Name', urls);
         });
     </script>
 
@@ -35,8 +39,12 @@
                 </ul>
                 <ul class="nav navbar-nav">                 
                     <li data-bind="ifnot: loginUser().isVisibleName"><a href="#!/deep_navigation/authForm">LogIn</a></li>
+                    <li data-bind="ifnot: loginUser().isVisibleName"><a href="#!/deep_navigation/registerForm">Register</a></li>
                     <li data-bind="if: loginUser().isVisibleName"><a href="#" data-bind="click: loginUser().Logoff">LogOff</a></li>
-                    <li data-bind="if: loginUser().profileName"><a href="#!/deep_navigation/profile" data-bind="text: loginUser().profileName"></a></li>
+                    <li data-bind="if: loginUser().profileName">
+                        <a href="#" data-bind="text: loginUser().profileName, click: loginUser().GetProfileInfo"></a>
+                    </li>
+                    <li data-bind="if: loginUser().isVisibleName"><a href="#" data-bind="click: $root.MyTracks">My tracks</a></li>
                 </ul>
             </div>
         </div>

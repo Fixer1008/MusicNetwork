@@ -21,11 +21,11 @@ namespace MusicSocialNetwork.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet]
-        public ActionResult Login()
-        {
-            return View(new LoginViewModel());
-        }
+        //[HttpGet]
+        //public ActionResult Login()
+        //{
+        //    return View(new LoginViewModel());
+        //}
 
         [HttpPost]
         public bool Login(LoginViewModel userLogin)
@@ -71,40 +71,47 @@ namespace MusicSocialNetwork.Controllers
             FormsAuthentication.SignOut();
         }
 
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View(new RegisterViewModel());
-        }
+        //[HttpGet]
+        //public ActionResult Register()
+        //{
+        //    return View(new RegisterViewModel());
+        //}
 
         [HttpPost]
-        public ActionResult Register(RegisterViewModel registerUser)
+        public bool Register(RegisterViewModel registerUser)
         {
             var dbUser = _unitOfWork.UserRepository.All.FirstOrDefault(
                 user=>user.UserName == registerUser.UserName);
 
             if (dbUser == null)
             {
-                var p = Crypto.HashPassword(registerUser.Password);
-                var length = p.Length;
-                _unitOfWork.UserRepository.Create(new User()
-                {
-                    UserName = registerUser.UserName,
-                    Email = registerUser.Email,
-                    Password = p,
-                    ImageData = new byte[3] {1, 2, 3},
-                    ImageMimeType = "geqwge",
-                    RoleId = 2
-                });
-                _unitOfWork.Commit();
+                var ava = _unitOfWork.ImageRepository.All.FirstOrDefault(
+                    image => image.FileName == "noavatar");
 
-                FormsAuthentication.SetAuthCookie(registerUser.UserName, false);
-                return RedirectToAction("Index", "Home");
+                if (ava!=null)
+                {
+                    var p = Crypto.HashPassword(registerUser.Password);
+                    var length = p.Length;
+                    _unitOfWork.UserRepository.Create(new User()
+                    {
+                        UserName = registerUser.UserName,
+                        Email = registerUser.Email,
+                        Password = p,
+                        ImageData = ava.ImageData,
+                        ImageMimeType = ava.ImageMimeType,
+                        RoleId = 2
+                    });
+                    _unitOfWork.Commit();
+
+                    FormsAuthentication.SetAuthCookie(registerUser.UserName, false);
+                    return true;
+                }
+                return false;
             }
             else
             {
                 ModelState.AddModelError("", "Ошибка при регистрации");
-                return null;
+                return false;
             }
         }
     }

@@ -1,0 +1,16 @@
+﻿<script type="text/html" id="registerForm">
+    <div data-bind="ifnot: loginUser().isVisibleName">
+        <div id="loginForm" class="form-horizontal col-md-offset-4 col-md-5">
+            <h3>Register form</h3>
+            <form data-bind="submit: registerUser().Register" enctype="multipart/form-data" method="post">
+                <p><label class="loginLabel">Username: </label></p>
+                <p><input class="loginInput" type="text" name="username" data-bind="value: registerUser().registerUserName" /></p>
+                <p><label class="loginLabel">Email: </label></p>
+                <p><input class="loginInput" type="text" name="email" data-bind="value: registerUser().registerUserEmail" /></p>
+                <p><label class="loginLabel">Password: </label></p>
+                <p><input class="loginInput" type="password" name="pass" data-bind="value: registerUser().registerUserPassword" /></p>
+                <button id="registerButton" type="submit" data-bind="enable: registerUser().isValid()">Register</button>
+            </form>
+        </div>
+    </div>
+</script>

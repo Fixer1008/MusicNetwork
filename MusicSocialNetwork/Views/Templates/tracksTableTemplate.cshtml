@@ -1,0 +1,6 @@
+﻿<script type="text/html" id="tracksTable">
+    <td data-bind="template: {name: 'player'}"></td>
+    <td>
+        <button type="submit" data-bind="enable: IsEnable, click: $root.AddTrack"><img src="@Url.Action("GetPlusImage", "Image")" /></button>
+    </td>
+</script>

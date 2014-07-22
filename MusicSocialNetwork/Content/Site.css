@@ -14,6 +14,8 @@ input,
 select,
 textarea {
     max-width: 280px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 /* styles for validation helpers */
@@ -43,14 +45,23 @@ input[type="checkbox"].input-validation-error {
 
 #loginForm {
     margin-top: 10px; 
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
+    background: white;
+    border: 2px solid darkviolet;
+}
+
+#registerButton {
+    margin-bottom: 10px;
 }
 
 #loginButton {
      margin-top: 5px; 
+    margin-bottom: 10px;
 }
 
 .loginLabel {
+    margin-top: 5px;
+    margin-right: 5px;
     color: darkviolet;
 }
 
@@ -82,6 +93,11 @@ input[type="checkbox"].input-validation-error {
     margin-left: 5px;
 }
 
+#ava,
+#avaForm {
+    margin-top: 10px; 
+    margin-bottom: 10px; 
+}
 
 .duration {
     color: black;

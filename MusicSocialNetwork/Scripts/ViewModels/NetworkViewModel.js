@@ -1,5 +1,5 @@
 ﻿
-function LoadViewModel(isAuth, identityName) {
+function LoadViewModel(isAuth, identityName, urls) {
     var isAuthFlag;
     var name;
     if (isAuth == "True") {
@@ -26,8 +26,8 @@ function LoadViewModel(isAuth, identityName) {
     }
 
     function User(data) {
-        this.UserName = ko.observable(data.newUserName);
-        this.Pass = ko.observable(data.newUserPassword);
+        this.UserName = ko.observable(data.loginUserName);
+        this.Pass = ko.observable(data.loginUserPassword);
     }
 
     function Track(data, userName) {
@@ -37,18 +37,30 @@ function LoadViewModel(isAuth, identityName) {
         this.Duration = ko.observable(format(data.duration));
         this.Url = ko.observable(data.url);
         this.UserName = ko.observable(userName);
+        this.IsEnable = ko.observable(true);
     }
 
     function NetworkViewModel() {
         var self = this;
 
+        function successLogin(data) {
+            if (data == "True") {
+                self.loginUser().isVisibleName(true);
+                self.loginUser().profileName(self.loginUser().loginUserName());
+                self.loginUser().isLoginError(false);
+            } else {
+                self.loginUser().isVisibleName(false);
+                self.loginUser().isLoginError(true);
+            }
+        }
+
         self.loginUser = ko.validatedObservable({
-                newUserName: ko.observable().extend({
+                loginUserName: ko.observable().extend({
                     required: true,
                     minLength: 4,
                     maxLength: 20
                 }),
-                newUserPassword: ko.observable().extend({
+                loginUserPassword: ko.observable().extend({
                     required: true,
                     minLength: 8,
                     maxLength: 20
@@ -56,55 +68,159 @@ function LoadViewModel(isAuth, identityName) {
                 isVisibleName: ko.observable(isAuthFlag),
                 isLoginError: ko.observable(false),
                 profileName: ko.observable(name),
+                avatar: ko.observable(),
 
-            Login : function () {
-                var user = new User(self.loginUser());
+                Login : function () {
+                    var user = new User(self.loginUser());
 
+                    $.ajax({
+                        url: urls[0],
+                        type: 'POST',
+                        data: ko.toJSON(user),
+                        contentType: "application/json",
+                        success: function (data) {
+                            successLogin(data);
+                        }
+                     });
+                },
+
+                 Logoff : function () {
+                    $.ajax({
+                        url: urls[1],
+                        type: 'GET',
+                        success: function () {
+                            self.loginUser().isVisibleName(false);
+                            self.loginUser().profileName('');
+                            self.loginUser().loginUserName('');
+                            self.loginUser().loginUserPassword('');
+                            self.registerUser().registerUserName('');
+                            self.registerUser().registerUserPassword('');
+                            self.registerUser().registerUserEmail('');
+                            $(location).attr('href', '#!/deep_navigation/start');
+                        },
+                    });
+                 },
+
+                 GetProfileInfo: function () {
+                     self.loginUser().avatar('Image/GetImageByUsername/?name=' + self.loginUser().profileName());
+                     $.ajax({
+                         url: '../api/User/?name='+self.loginUser().profileName(),
+                         type: 'GET',
+                         success: function (data) {
+                             self.registerUser().registerUserName(data.UserName);
+                             self.registerUser().registerUserEmail(data.Email);
+                             $(location).attr('href', '#!/deep_navigation/profile');                   
+                         },
+                         error: function(data) {
+                             alert('Error!');
+                         }
+                     });
+                 },
+
+                 EditProfile: function () {
+                     var editProfile = new newUser(self.registerUser());
+                     $.ajax({
+                         url: '../api/User/',
+                         type: 'PUT',
+                         data: ko.toJSON(editProfile),
+                         contentType: "application/json",
+                         success: function (data) {
+                             alert('Profile was successfully changed!');
+                         },
+                         error: function (data) {
+                             alert('Error!');
+                         }
+                     });
+                 },
+
+                 //ChangeAva: function () {
+                 //    var postedImage = $('#newAvaFile').val();
+                 //    $.ajax({
+                 //        url: '/Image/Index',
+                 //        type: 'POST',
+                 //        data: postedImage,
+                 //        enctype: 'multipart/form-data',
+                 //        success: function (data) {
+                 //            alert('Success!');
+                 //        },
+                 //        error: function (data) {
+                 //            alert('Error!');
+                 //        }
+                 //    });
+                 //}
+        });
+
+        function newUser(data) {
+            this.UserName = ko.observable(data.registerUserName);
+            this.Email = ko.observable(data.registerUserEmail);
+            this.Password = ko.observable(data.registerUserPassword);
+        }
+
+        self.registerUser = ko.validatedObservable({
+            registerUserName: ko.observable().extend({
+                required: true,
+                minLength: 4,
+                maxLength: 20
+            }),
+            registerUserEmail: ko.observable().extend({
+                required: true,
+                email: true,
+                minLength: 4,
+                maxLength: 30
+            }),
+            registerUserPassword: ko.observable().extend({
+                required: true,
+                minLength: 8,
+                maxLength: 20
+            }),
+
+            Register: function () {
+                var user = new newUser(self.registerUser());
                 $.ajax({
-                    url: '../Account/Login',
+                    url: urls[2],
                     type: 'POST',
                     data: ko.toJSON(user),
                     contentType: "application/json",
                     success: function (data) {
                         if (data == "True") {
                             self.loginUser().isVisibleName(true);
-                            self.loginUser().profileName(self.loginUser().newUserName());
-                            self.loginUser().isLoginError(false);
+                            self.loginUser().profileName(self.registerUser().registerUserName());
                         } else {
                             self.loginUser().isVisibleName(false);
-                            self.loginUser().isLoginError(true);
                         }
-                    },
-                });
-            },
-
-             Logoff : function () {
-                $.ajax({
-                    url: '../Account/LogOff',
-                    type: 'GET',
-                    success: function () {
-                        self.loginUser().isVisibleName(false);
-                        self.loginUser().profileName('');
-                        self.loginUser().newUserName('');
-                        self.loginUser().newUserPassword('');
-                        $(location).attr('href', '#!/deep_navigation/start');
-                    },
-                });
+                    }
+             });
             }
-        });
-
+         });
 
         self.tracks = ko.observableArray([]);
 
         self.AddTrack = function (track) {
+            track.IsEnable(false);
             var jsonTrack = ko.toJSON(track);
             $.ajax({
-                url: 'api/song',
+                url: '../api/song',
                 type: 'POST',
                 data: jsonTrack,
                 contentType: "application/json",
                 success: function () {
-                    alert('success!');
+                }
+            });
+        }
+
+        self.myTracks = ko.observableArray([]);
+
+        self.MyTracks = function() {
+            $.ajax({
+                url: '../api/song/?name=' + self.loginUser().profileName(),
+                type: 'GET',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var formatDuration = format(data[i].Duration);
+                        data[i].Duration = formatDuration;
+                    }
+                    self.myTracks(data);
+                    $(location).attr('href', '#!/deep_navigation/userTracks');
                 }
             });
         }

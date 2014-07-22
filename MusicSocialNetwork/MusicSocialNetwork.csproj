@@ -151,6 +151,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SongController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -171,6 +172,7 @@
     </Content>
     <Content Include="App_Data\Images\dashBerlin.jpg" />
     <Content Include="App_Data\Images\glyphicons_432_plus.png" />
+    <Content Include="App_Data\Images\noavatar.gif" />
     <Content Include="App_Data\Images\pendulum.jpg" />
     <Content Include="App_Data\Images\secondstoMars.png" />
     <Content Include="Content\bootstrap.css" />
@@ -219,6 +221,14 @@
     <Content Include="Views\Home\Add.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Templates\mainPageTemplate.cshtml" />
+    <Content Include="Views\Templates\welcomeTemplate.cshtml" />
+    <Content Include="Views\Templates\authFormTemplate.cshtml" />
+    <Content Include="Views\Templates\tracksInfoTemplate.cshtml" />
+    <Content Include="Views\Templates\playerTemplate.cshtml" />
+    <Content Include="Views\Templates\tracksTableTemplate.cshtml" />
+    <Content Include="Views\Templates\registerFormTemplate.cshtml" />
+    <Content Include="Views\Templates\profilePageTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Image\" />

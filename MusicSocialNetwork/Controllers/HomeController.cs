@@ -23,7 +23,8 @@ namespace MusicSocialNetwork.Controllers
         {
             string[] additionalImages =
             {
-                "glyphicons_432_plus"
+                "glyphicons_432_plus",
+                "noavatar"
             };
 
             var dbImages = _unitOfWork.ImageRepository.All.Where(

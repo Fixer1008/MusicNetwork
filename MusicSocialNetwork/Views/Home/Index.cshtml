@@ -4,77 +4,20 @@
     ViewBag.Title = "Home Page";
 }
 
-<script type="text/html" id="mainPage">
-    <h2>The most popular artists!</h2>
-    @if (Model.Count != 0)
-    {
-        <table class="table">
-            <tr>
-                @foreach (var image in Model)
-                {
-                    <td>
-                        <a href="#!/deep_navigation/@image.FileName">
-                            <img width="200" height="200" src="@Url.Action("GetImage", "Image", new { id = image.ImageId })" />
-                        </a>
-                    </td>
-                }
-            </tr>
-        </table>
-    }  
-</script>
-<script type="text/html" id="welcome">
-    <div data-bind="if: loginUser().isVisibleName">
-        <h2>Welcome to MusicNetwork site!</h2>
-        <p>
-            Now you are the member of our music network! You can not only see what kinds of music our site is possesed,
-            you can add some tracks to your profile and listen to it! Enjoy!
-        </p>
-        <p>
-            In order to open your profile, click on your username at the top of the page or
-            click <a href="#!/deep_navigation/profile">here</a>
-        </p>
-    </div>
-</script>
-<script type="text/html" id="authForm">
-    <div data-bind="ifnot: loginUser().isVisibleName">
-        <h3>Login form</h3>
-        <p class="error" data-bind="if: loginUser().isLoginError">Incorrect login or password!</p>
-        <form id="loginForm" data-bind="submit: loginUser().Login">
-            <p><label class="loginLabel">Login: </label></p>
-            <p><input class="loginInput" type="text" name="login" data-bind="value: loginUser().newUserName" /></p>
-            <p><label class="loginLabel">Password: </label></p>
-            <p><input class="loginInput" type="password" name="pass" data-bind="value: loginUser().newUserPassword" /></p>
-            <button id="loginButton" type="submit" data-bind="enable: loginUser().isValid()">Login</button>
-        </form>
-    </div>
-</script>
-<script type="text/html" id="tracksInfo">
-    <td data-bind="text: SongName"></td>
-    <td data-bind="text: Duration"></td>
-</script>
-<script type="text/html" id="tracksTable">
-    <td>
-        <audio controls><source data-bind="attr: {src: Url}"></audio>
-    </td>
-    <td>
-        <button type="submit" data-bind="click: $root.AddTrack"><img src="@Url.Action("GetPlusImage", "Image")" /></button>
-    </td>  
-</script>
+@Html.Partial(Url.Content("~/Views/Templates/mainPageTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/welcomeTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/authFormTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/tracksInfoTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/playerTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/tracksTableTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/registerFormTemplate.cshtml"))
+@Html.Partial(Url.Content("~/Views/Templates/profilePageTemplate.cshtml"))
 
 <div class="row">
     
     <div data-bind="page: {id: 'deep_navigation', role: 'start'}">
         <div data-bind="page: {id: 'start'}">
             <div data-bind="template: {name: 'mainPage'}"></div>
-
-            @*<form action=@Url.Action("Index", "Image") enctype="multipart/form-data" method="post">
-                <div>
-                    <input type="file" name="postedImage" />
-                </div>
-                <div>
-                    <input type="submit" name="loadimage" value="Load" />
-                </div>
-            </form>*@
         </div>
         
         <div data-bind="page: {id: 'dashBerlin'}">
@@ -100,13 +43,31 @@
 
             </div>
 
-            <div data-bind="page: {id: 'authForm'}">
-                <div data-bind="template: {name: 'welcome'}"></div>
-                <div data-bind="template: {name: 'authForm'}"></div>
-            </div>
-
-            <div data-bind="page: {id: 'profile'}">
-
-            </div>
+        <div data-bind="page: {id: 'authForm'}">
+            <div data-bind="template: {name: 'welcome'}"></div>
+            <div data-bind="template: {name: 'authForm'}"></div>
         </div>
+        
+        <div data-bind="page: {id: 'registerForm'}">
+            <div data-bind="template: {name: 'welcome'}"></div>            
+            <div data-bind="template: {name: 'registerForm'}"></div>
+        </div>
+
+        <div data-bind="page: {id: 'profile'}">
+            <div data-bind="template: {name: 'profilePage'}"></div>
+        </div>
+        
+        <div data-bind="page: {id: 'userTracks'}">
+            <h3 data-bind="if: myTracks().length==0">You have no one track!</h3>
+            <table class="table" data-bind="if: loginUser().isVisibleName">
+                <tbody data-bind="foreach: myTracks">
+                    <tr data-bind="template: {name: 'tracksInfo'}"></tr>
+                    <tr>
+                        <td data-bind="template: {name: 'player'}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+  </div>

@@ -51,6 +51,13 @@ namespace MusicSocialNetwork.Controllers
             return File(image.ImageData, image.ImageMimeType);
         }
 
+        public FileResult GetImageByUsername(string name)
+        {
+            var dbUser = _unitOfWork.UserRepository.All.FirstOrDefault(
+                user => user.UserName == name);
+            return File(dbUser.ImageData, dbUser.ImageMimeType);
+        }
+
         public FileResult GetPlusImage()
         {
             var image = _unitOfWork.ImageRepository.All.FirstOrDefault(

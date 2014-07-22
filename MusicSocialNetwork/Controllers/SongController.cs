@@ -21,14 +21,23 @@ namespace MusicSocialNetwork.Controllers
         }
 
         // GET api/song
-        public IEnumerable<RoleViewModel> Get()
+        public IEnumerable<SongEntity> Get(string name)
         {
-            //var songs = _unitOfWork.SongRepository.All;
-            //var roles = dbRoles.Select(dbRole => new RoleViewModel()
-            //{
-            //    RoleName = dbRole.RoleName
-            //}).ToList();
-            return null;
+            var dbUser = _unitOfWork.UserRepository.All.FirstOrDefault(
+                        user => user.UserName == name);
+
+            var dbSongs = dbUser.Songs.AsEnumerable();
+
+            var songs = dbSongs.Select(dbSong => new SongEntity()
+            {
+                SongName = dbSong.SongName,
+                Artist = dbSong.Artist,
+                Duration = dbSong.Duration.ToString(),
+                Url = dbSong.Url,
+                UserName = name
+            }).ToList();
+
+            return songs;
         }
 
         // GET api/song/5

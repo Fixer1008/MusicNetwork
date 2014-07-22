@@ -36,12 +36,8 @@ namespace MusicSocialNetwork
             builder.RegisterModule<RepositoryModule>();
 
             var container = builder.Build();
-            //container.Resolve<MusicNetworkRoleProvider>();
-
-            //DependencyResolver
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
             
-
             var resolver = new AutofacWebApiDependencyResolver(container);
             config.DependencyResolver = resolver;
         }

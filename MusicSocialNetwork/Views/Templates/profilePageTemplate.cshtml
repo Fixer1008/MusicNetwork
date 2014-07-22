@@ -1,0 +1,18 @@
+﻿<script type="text/html" id="profilePage">
+    <h3>My profile</h3>
+    <img width="100" height="100" id="ava" data-bind="attr: {src: loginUser().avatar}" />
+    <form data-bind="submit: registerUser().Register">
+        <p>
+            <label class="loginLabel">Username: </label>
+            <label data-bind="text: registerUser().registerUserName"></label>
+        </p>
+        <p><label class="loginLabel">Email: </label></p>
+        <p><input class="loginInput" type="text" name="email" data-bind="value: registerUser().registerUserEmail" /></p>
+        <p><label class="loginLabel">Change password: </label></p>
+        <p><input class="loginInput" type="password" name="pass" data-bind="value: registerUser().registerUserPassword" /></p>
+        <button id="registerButton" type="submit"
+                data-bind="enable: registerUser().isValid(), click: loginUser().EditProfile">
+            Edit
+        </button>
+    </form>
+</script>

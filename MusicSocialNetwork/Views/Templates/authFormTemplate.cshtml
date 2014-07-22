@@ -1,0 +1,15 @@
+﻿<script type="text/html" id="authForm">
+    <div data-bind="ifnot: loginUser().isVisibleName">
+        <div id="loginForm" class="form-horizontal col-md-offset-4 col-md-5">
+            <h3>Login form</h3>
+            <p class="error" data-bind="if: loginUser().isLoginError">Incorrect login or password!</p>
+            <form data-bind="submit: loginUser().Login">
+                <p><label class="loginLabel">Login: </label></p>
+                <p><input class="loginInput" type="text" name="login" data-bind="value: loginUser().loginUserName" /></p>
+                <p><label class="loginLabel">Password: </label></p>
+                <p><input class="loginInput" type="password" name="pass" data-bind="value: loginUser().loginUserPassword" /></p>
+                <button id="loginButton" type="submit" data-bind="enable: loginUser().isValid()">Login</button>
+            </form>
+        </div>
+    </div>
+</script>
